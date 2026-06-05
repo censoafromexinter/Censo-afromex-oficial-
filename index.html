@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CENSO AFROMEX - Sistema Oficial</title>
+<style>
+:root{--v:#2D5A3D;--d:#C9A227;--n:#1A1A1A;--b:#F5F5F0;--g:#6B6B6B;--o:#E85D04;--r:#9D0208}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--n);color:var(--b);min-height:100vh}
+.hdr{background:linear-gradient(180deg,var(--v)0%,var(--n)100%);padding:12px 8px;text-align:center;border-bottom:3px solid var(--d);position:relative}
+.logo{width:300px;height:auto;max-height:200px;object-fit:contain;margin-bottom:6px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5))}
+.hdr h1{color:var(--d);font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:2px;text-shadow:2px 2px 4px rgba(0,0,0,0.7)}
+.hdr p{color:var(--b);font-size:11px;font-weight:500;letter-spacing:1px;margin-top:2px}
+.hdr .fnd{color:var(--d);font-size:9px;margin-top:4px;font-style:italic}
+.nsuku{position:fixed;bottom:2px;right:6px;font-size:7px;color:rgba(201,162,39,0.15);font-style:italic;letter-spacing:2px;pointer-events:none;z-index:9999}
+.nav{display:flex;background:var(--n);border-bottom:2px solid var(--v);overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:1000}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{flex:1;min-width:70px;padding:10px 6px;background:none;border:none;color:var(--g);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;border-bottom:3px solid transparent;transition:all .3s;white-space:nowrap}
+.nav-btn.a{color:var(--d);border-bottom-color:var(--d);background:rgba(201,162,39,0.1)}
+.nav-btn.hid{display:none}
+.sec{display:none;padding:12px 10px;max-width:600px;margin:0 auto;padding-bottom:50px}
+.sec.a{display:block}
+.card{background:linear-gradient(145deg,#252525 0%,#1A1A1A 100%);border:1px solid rgba(201,162,39,0.25);border-radius:10px;padding:16px;margin-bottom:10px;box-shadow:0 3px 12px rgba(0,0,0,0.4)}
+.ct{color:var(--d);font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--v);display:flex;align-items:center;gap:6px}
+.fg{margin-bottom:12px}
+.fl{display:block;color:var(--d);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.fl .rq{color:var(--o);margin-left:2px}
+.in,.sel,.tx{width:100%;padding:10px 8px;background:#0f0f0f;border:2px solid rgba(201,162,39,0.25);border-radius:6px;color:var(--b);font-size:13px}
+.in:focus,.sel:focus,.tx:focus{outline:none;border-color:var(--d);box-shadow:0 0 8px rgba(201,162,39,0.2)}
+.tx{min-height:60px;resize:vertical}
+.btn{width:100%;padding:12px;background:linear-gradient(135deg,var(--v)0%,#1B4332 100%);border:none;border-radius:6px;color:var(--b);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:all .3s;box-shadow:0 3px 12px rgba(45,90,61,0.3);margin-top:6px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(45,90,61,0.5)}
+.btn-d{background:linear-gradient(135deg,var(--d)0%,#A0801D 100%);color:var(--n);box-shadow:0 3px 12px rgba(201,162,39,0.3)}
+.btn-n{background:linear-gradient(135deg,var(--o)0%,#C44A03 100%);color:var(--b);box-shadow:0 3px 12px rgba(232,93,4,0.3)}
+.btn-r{background:linear-gradient(135deg,#9D0208 0%,#6B0105 100%);box-shadow:0 3px 12px rgba(157,2,8,0.3)}
+.fc{text-align:center;margin-bottom:12px}
+.fp{width:130px;height:160px;background:#0a0a0a;border:3px dashed var(--d);border-radius:8px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.fp img{width:100%;height:100%;object-fit:cover}
+.fp .ph{color:var(--g);font-size:30px}
+.fi{display:none}
+.fb{display:inline-block;padding:6px 14px;background:var(--d);color:var(--n);border-radius:18px;font-size:11px;font-weight:700;cursor:pointer;text-transform:uppercase}
+.firm{background:#0a0a0a;border:2px solid var(--d);border-radius:6px;padding:6px;margin-bottom:6px}
+.cv{width:100%;height:90px;background:#151515;border-radius:4px;touch-action:none}
+.fbt{display:flex;gap:6px;margin-top:6px}
+.fbt .btn{flex:1;padding:6px;font-size:10px;margin-top:0}
+.cred{background:linear-gradient(135deg,var(--b)0%,#E8E8E0 100%);border:3px solid var(--v);border-radius:12px;padding:16px;color:var(--n);margin-bottom:10px;position:relative;overflow:hidden}
+.cred::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--v)33%,var(--d)33%,var(--d)66%,var(--o)66%)}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-top:6px}
+.cti{flex:1}
+.cti h3{font-size:14px;color:var(--n);text-transform:uppercase;letter-spacing:1px;margin:0;font-weight:900}
+.cti p{font-size:8px;color:var(--g);margin:2px 0 0}
+.cfol{background:var(--v);color:var(--b);padding:3px 10px;border-radius:15px;font-size:11px;font-weight:900;letter-spacing:1px}
+.cb{display:flex;gap:10px}
+.cf{width:80px;height:100px;border:2px solid var(--d);border-radius:6px;overflow:hidden;flex-shrink:0}
+.cf img{width:100%;height:100%;object-fit:cover}
+.cd{flex:1}
+.cc{margin-bottom:5px}
+.ccl{font-size:7px;text-transform:uppercase;color:var(--g);letter-spacing:1px}
+.ccv{font-size:11px;font-weight:700;color:var(--n)}
+.casa-d{background:linear-gradient(135deg,rgba(45,90,61,0.15)0%,rgba(201,162,39,0.1)100%);border-left:4px solid var(--v);padding:6px 8px;margin:6px 0;border-radius:0 6px 6px 0}
+.casa-dl{font-size:7px;text-transform:uppercase;color:var(--v);letter-spacing:1px;font-weight:700}
+.casa-dv{font-size:13px;font-weight:900;color:var(--n);text-transform:uppercase}
+.cft{margin-top:10px;padding-top:6px;border-top:1px solid #C4C4BC;display:flex;justify-content:space-between;align-items:center}
+.cqr{width:45px;height:45px}
+.cfs{text-align:right}
+.cfl{border-top:1px solid var(--n);width:80px;margin:0 0 3px auto;padding-top:3px}
+.cftx{font-size:7px;color:var(--g)}
+.rev{background:linear-gradient(135deg,#E8E8E0 0%,#DDD8CC 100%);border:3px solid var(--o);border-radius:12px;padding:16px;color:var(--n);margin-top:10px;position:relative}
+.rev::before{content:"";position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--v)33%,var(--d)33%,var(--d)66%,var(--o)66%)}
+.rh{text-align:center;margin-bottom:10px}
+.rt{font-size:12px;font-weight:900;text-transform:uppercase;color:var(--v);letter-spacing:1px}
+.rd{text-align:center;font-size:10px;line-height:1.4;margin-bottom:10px;color:#333}
+.rl{background:rgba(45,90,61,0.08);border-left:3px solid var(--v);padding:8px;font-size:9px;line-height:1.3;text-align:justify;margin-bottom:10px}
+.rqc{text-align:center}
+.rql{font-size:8px;text-transform:uppercase;color:var(--g);margin-bottom:3px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--v);color:var(--b);padding:10px 20px;border-radius:25px;font-weight:800;font-size:12px;z-index:9999;opacity:0;transition:all .4s;box-shadow:0 4px 15px rgba(45,90,61,0.4);text-transform:uppercase;letter-spacing:1px}
+.toast.s{transform:translateX(-50%) translateY(0);opacity:1}
+.toast-e{background:var(--r);box-shadow:0 4px 15px rgba(157,2,8,0.4)}
+.tab{width:100%;border-collapse:collapse;margin-top:10px;font-size:10px}
+.tab th{background:var(--v);color:var(--b);padding:6px;text-align:left;text-transform:uppercase;font-size:9px;letter-spacing:1px}
+.tab td{padding:6px;border-bottom:1px solid rgba(201,162,39,0.15);color:var(--b)}
+.tab tr:hover td{background:rgba(201,162,39,0.05)}
+.sb{width:100%;padding:10px 8px;background:#0a0a0a;border:2px solid var(--d);border-radius:6px;color:var(--b);font-size:13px;margin-bottom:10px}
+.sb:focus{outline:none;border-color:#D4B43A}
+.stg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.stb{background:linear-gradient(145deg,#252525 0%,#1A1A1A 100%);border:1px solid rgba(201,162,39,0.2);border-radius:8px;padding:10px;text-align:center}
+.stn{font-size:22px;font-weight:900;color:var(--d);text-shadow:0 2px 4px rgba(0,0,0,0.5)}
+.stl{font-size:9px;color:var(--g);text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+.login-box{background:linear-gradient(145deg,#252525 0%,#1A1A1A 100%);border:2px solid var(--d);border-radius:12px;padding:20px;max-width:300px;margin:50px auto;text-align:center}
+.login-box h2{color:var(--d);font-size:18px;margin-bottom:15px;text-transform:uppercase}
+.login-box .in{margin-bottom:12px}
+.aviso{background:rgba(45,90,61,0.1);border:1px solid rgba(201,162,39,0.3);border-radius:8px;padding:12px;margin:10px 0;font-size:11px;line-height:1.5;max-height:200px;overflow-y:auto}
+.aviso h4{color:var(--d);margin-bottom:8px;text-transform:uppercase;font-size:12px}
+.aviso p{margin-bottom:6px;color:var(--b)}
+.aviso strong{color:var(--d)}
+.contacto{background:rgba(201,162,39,0.1);border-left:3px solid var(--d);padding:8px;margin:10px 0;font-size:11px}
+.contacto a{color:var(--d);text-decoration:none}
+@media(max-width:480px){.hdr h1{font-size:14px}.cb{flex-direction:column}.cf{width:100%;height:150px}.stg{grid-template-columns:1fr}}
+@media print{.nav,.btn,.np{display:none!important}body{background:white!important;color:black!important}.sec{display:block!important}}
+</style>
+</head>
+<body>
+<div class="nsuku">NSUKU YA NKAMA</div>
+<div class="hdr">
+<img src="data:image/jpeg;base64,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" alt="Censo Afromex" class="logo">
+<h1>CENSO AFROMEX</h1>
+<p>Censo Intercomunitario de Comunidades Afrodescendientes y Africanas en México</p>
+<p class="fnd">Fundador: Moshe Betech Keiser | Lic. Ciencias Teológicas</p>
+</div>
+<div id="login" class="login-box">
+<h2>🔐 Acceso Administrador</h2>
+<p style="font-size:11px;color:var(--g);margin-bottom:12px">Si eres usuario normal, cierra esta ventana y usa el menú de arriba para registrarte.</p>
+<div class="fg"><label class="fl">Contraseña</label><input type="password" class="in" id="pwd" placeholder="Ingresa contraseña"></div>
+<button class="btn btn-d" onclick="chk()">🔓 Entrar</button>
+<button class="btn btn-r" onclick="skip()" style="margin-top:6px">👤 Soy usuario normal</button>
+</div>
+
+<div class="nav" id="navmenu">
+<button class="nav-btn a" onclick="sh('inicio')">🏠 Inicio</button>
+<button class="nav-btn" onclick="sh('registro')">📝 Registro</button>
+<button class="nav-btn" onclick="sh('credenciales')">🎫 Credencial</button>
+<button class="nav-btn hid" onclick="sh('directorio')">📖 Directorio</button>
+<button class="nav-btn hid" onclick="sh('verificar')">🔍 Verificar</button>
+</div>
+
+<div id="inicio" class="sec a">
+<div class="card">
+<div class="ct">⚜️ Bienvenido al Censo Afromex</div>
+<p style="font-size:12px;line-height:1.5;margin-bottom:10px">
+El <strong style="color:var(--d)">CENSO AFROMEX</strong> es el registro oficial de todas las comunidades <strong>afrodescendientes y africanas</strong> que viven en México. Rastafarismo, Palo, Vodú, Santería, Candomblé, Umbanda, Quimbanda, Espiritismo Cruzado, Tambor de Mina, Tercera Raíz, Garífuna, Afromexicanos y todas las tradiciones de los negros en México.
+</p>
+</div>
+
+<div class="card">
+<div class="ct">📖 ¿Quiénes Somos?</div>
+<div class="aviso" style="max-height:none">
+<p>La <strong>Cooperativa Combativa Censo Afromex</strong> es un grupo de religiosos de distintas vertientes de la cultura y cosmovisión de los pueblos afrodescendientes y de la <strong>Tercera Raíz</strong> en México.</p>
+<p>La <strong>Tercera Raíz</strong> es la sangre africana que corre por las venas del pueblo mexicano, junto a la española y la indígena. En los últimos años hemos logrado que el <strong>Gobierno de la República Mexicana</strong> certifique y reconozca oficialmente esta Tercera Raíz.</p>
+<p>Somos un <strong>movimiento pacífico</strong>. Aunque nuestro nombre dice "combativa", no combatimos con violencia ni hacemos llamados a la misma. Desaprobamos cualquier clase de violencia de parte de nuestros afiliados o censados hacia otras personas, y viceversa. <strong>Nuestra lucha no es con armas, sino con la legalidad.</strong></p>
+<p>Buscamos que cada uno de los templos, casas religiosas y comunidades teológicas pueda registrarse individualmente ante la <strong>Secretaría de Gobernación Federal, Dirección de Asuntos Religiosos</strong>, como asociación religiosa legal.</p>
+<p>El <strong>Censo Afromex</strong> es realizado por líderes y asociados de estas casas religiosas únicamente para medir el número de personas dentro de estas comunidades, agruparnos y ponernos de acuerdo en las medidas legales, sociales, culturales y religiosas que tomaremos en beneficio de cada una de las casas aquí representadas.</p>
+<p>Cabe mencionar que, aun sin estar registrados como asociación religiosa, la <strong>Ley de Culto Público y su Reglamento</strong> en México nos da la facultad legal de llamarnos <strong>agrupación religiosa</strong>.</p>
+<p>La Cooperativa Combativa Censo Afromex nació como respuesta a las constantes <strong>cacerías de brujas</strong> por parte de distintas autoridades de los tres niveles de gobierno contra estas casas religiosas, pasando por alto las propias leyes constitucionales, las leyes en materia de asuntos religiosos, los reglamentos y los acuerdos internacionales firmados por México.</p>
+<p style="text-align:center;color:var(--d);font-weight:900;margin-top:10px">En Censo Afromex censamos para contar.</p>
+</div>
+<div class="contacto">
+<p><strong>📧 Correo:</strong> <a href="mailto:censoafromex@gmail.com">censoafromex@gmail.com</a></p>
+<p><strong>📞 Teléfonos:</strong> 5641172744 | 5571127468</p>
+<p><strong>📍 Dirección:</strong> Av. de las Huertas 12, Col. Las Huertas 3ra Sección, Naucalpan, Estado de México</p>
+</div>
+</div>
+
+<div class="card">
+<div class="ct">🔒 Aviso de Privacidad</div>
+<div class="aviso">
+<p>En cumplimiento con la <strong>Ley Federal de Protección de Datos Personales</strong>, la <strong>Cooperativa Combativa Censo Afromex</strong> informa:</p>
+<p><strong>1. Responsable:</strong> Cooperativa Combativa Censo Afromex, organización intercomunitaria, autónoma, ajena a cualquier partido político o gobierno.</p>
+<p><strong>2. Datos recabados:</strong> Nombre, fecha de nacimiento, lugar de residencia, contacto, información étnica-cultural (datos sensibles).</p>
+<p><strong>3. Finalidad:</strong> Única y exclusivamente para realizar el censo intercomunitario, generar estadísticas comunitarias y apoyar proyectos de la Cooperativa. <strong>No utilizamos sus datos para fines comerciales ni de lucro.</strong></p>
+<p><strong>4. Seguridad:</strong> Los datos son resguardados con medidas de seguridad administrativas, técnicas y físicas. El acceso está restringido exclusivamente al grupo autorizado de la Mesa Directiva.</p>
+<p><strong>5. Derechos ARCO:</strong> Usted tiene derecho a Acceso, Rectificación, Cancelación y Oposición. Solicitudes al correo: <strong>censoafromex@gmail.com</strong></p>
+<p><strong>6. Consentimiento:</strong> Al registrarse, usted otorga su consentimiento para el tratamiento de sus datos conforme a este aviso.</p>
+<p style="text-align:center;margin-top:8px;font-size:10px;color:var(--g)">Fecha de actualización: 05 de junio de 2026</p>
+</div>
+</div>
+
+<div class="stg">
+<div class="stb"><div class="stn" id="st-t">0</div><div class="stl">Registrados</div></div>
+<div class="stb"><div class="stn" id="st-a">0</div><div class="stl">Activos</div></div>
+<div class="stb"><div class="stn" id="st-m">0</div><div class="stl">Ministros</div></div>
+<div class="stb"><div class="stn" id="st-as">0</div><div class="stl">Asociados</div></div>
+</div>
+<button class="btn btn-d" onclick="sh('registro')">➕ Nuevo Registro</button>
+</div>
+
+<div id="registro" class="sec">
+<div class="card">
+<div class="ct">📝 Nuevo Registro</div>
+<form id="frm" onsubmit="event.preventDefault();guardar()">
+<div class="fc">
+<div class="fp" id="fpv"><span class="ph">📷</span></div>
+<input type="file" id="fin" class="fi" accept="image/*" capture="user" onchange="cf(this)">
+<label for="fin" class="fb">📸 Tomar Foto</label>
+</div>
+<div class="fg"><label class="fl">Folio<span class="rq">*</span></label><input type="text" class="in" id="fol" placeholder="AFM-000001" readonly></div>
+<div class="fg"><label class="fl">Nombre Completo<span class="rq">*</span></label><input type="text" class="in" id="nom" placeholder="Ej: Juan Pérez García" required></div>
+<div class="fg"><label class="fl">Fecha de Nacimiento<span class="rq">*</span></label><input type="date" class="in" id="fn" required></div>
+<div class="fg"><label class="fl">Lugar de Nacimiento</label><input type="text" class="in" id="ln" placeholder="Ciudad, Estado, País"></div>
+<div class="fg"><label class="fl">Clave de Elector</label><input type="text" class="in" id="cve" placeholder="Ej: ABCD123456EF7" maxlength="18"></div>
+<div class="fg"><label class="fl">Sección Electoral</label><input type="text" class="in" id="se" placeholder="Ej: 1234" maxlength="4"></div>
+<div class="fg"><label class="fl">Número de ID (Extranjeros)</label><input type="text" class="in" id="idext" placeholder="Pasaporte, FM2, FM3, etc."></div>
+<div class="fg"><label class="fl">Teléfono<span class="rq">*</span></label><input type="tel" class="in" id="tel" placeholder="10 dígitos" required></div>
+<div class="fg"><label class="fl">Correo Electrónico</label><input type="email" class="in" id="mail" placeholder="ejemplo@correo.com"></div>
+<div class="fg"><label class="fl">Dirección<span class="rq">*</span></label><textarea class="tx" id="dir" placeholder="Calle, número, colonia, ciudad, estado, CP" required></textarea></div>
+<div class="fg"><label class="fl">Estado Civil</label><select class="sel" id="ec"><option value="">Seleccionar...</option><option value="soltero">Soltero/a</option><option value="casado">Casado/a</option><option value="union">Unión Libre</option><option value="divorciado">Divorciado/a</option><option value="viudo">Viudo/a</option></select></div>
+<div class="fg"><label class="fl">Ocupación / Profesión</label><input type="text" class="in" id="ocu" placeholder="Ej: Maestro, Comerciante, Artista"></div>
+<div class="fg"><label class="fl">Nivel de Estudios</label><select class="sel" id="est"><option value="">Seleccionar...</option><option value="ninguno">Sin estudios formales</option><option value="primaria">Primaria</option><option value="secundaria">Secundaria</option><option value="preparatoria">Preparatoria</option><option value="tecnico">Técnico / Tecnológico</option><option value="licenciatura">Licenciatura</option><option value="maestria">Maestría</option><option value="doctorado">Doctorado</option></select></div>
+<div class="fg"><label class="fl">Tradición / Religión<span class="rq">*</span></label><select class="sel" id="trad" required><option value="">Seleccionar...</option><option value="rastafarismo">Rastafarismo</option><option value="palo">Palo Mayombe / Monte</option><option value="vodu">Vodú / Voodoo</option><option value="santeria">Santería / Regla de Ocha</option><option value="candomble">Candomblé</option><option value="umbanda">Umbanda</option><option value="quimbanda">Quimbanda</option><option value="espiritismo">Espiritismo Cruzado</option><option value="tambor_mina">Tambor de Mina</option><option value="tercera_raiz">Tercera Raíz</option><option value="garifuna">Garífuna</option><option value="afromexicano">Afromexicano</option><option value="ifa">Ifá / Babalawo</option><option value="otra">Otra tradición africana</option></select></div>
+<div class="fg"><label class="fl">Casa / Templo / Comunidad</label><input type="text" class="in" id="casa" placeholder="Ej: Nsuku Ya Nkama, Casa de Santo, etc."></div>
+<div class="fg"><label class="fl">Cargo / Jerarquía</label><input type="text" class="in" id="cargo" placeholder="Ej: Tata, Babalawo, Rastafari, Rabino, Mambo, Bokor, Iyawó, etc."></div>
+<div class="fg"><label class="fl">Origen / Ascendencia</label><input type="text" class="in" id="orig" placeholder="Ej: Africano, Afrodescendiente, Afro-mexicano"></div>
+<div class="fg"><label class="fl">País de Origen</label><input type="text" class="in" id="pori" placeholder="Ej: México, Cuba, Colombia, Haití, Nigeria"></div>
+<div class="fg"><label class="fl">Estado de Residencia</label><select class="sel" id="emx"><option value="">Seleccionar...</option><option value="aguascalientes">Aguascalientes</option><option value="bc">Baja California</option><option value="bcs">Baja California Sur</option><option value="campeche">Campeche</option><option value="cdmx">Ciudad de México</option><option value="chiapas">Chiapas</option><option value="chihuahua">Chihuahua</option><option value="coahuila">Coahuila</option><option value="colima">Colima</option><option value="durango">Durango</option><option value="edomex">Estado de México</option><option value="guanajuato">Guanajuato</option><option value="guerrero">Guerrero</option><option value="hidalgo">Hidalgo</option><option value="jalisco">Jalisco</option><option value="michoacan">Michoacán</option><option value="morelos">Morelos</option><option value="nayarit">Nayarit</option><option value="nuevo_leon">Nuevo León</option><option value="oaxaca">Oaxaca</option><option value="puebla">Puebla</option><option value="queretaro">Querétaro</option><option value="quintana_roo">Quintana Roo</option><option value="slp">San Luis Potosí</option><option value="sinaloa">Sinaloa</option><option value="sonora">Sonora</option><option value="tabasco">Tabasco</option><option value="tamaulipas">Tamaulipas</option><option value="tlaxcala">Tlaxcala</option><option value="veracruz">Veracruz</option><option value="yucatan">Yucatán</option><option value="zacatecas">Zacatecas</option></select></div>
+<div class="fg"><label class="fl">Observaciones</label><textarea class="tx" id="obs" placeholder="Información adicional relevante..."></textarea></div>
+<div class="fg"><label class="fl">Firma Digital<span class="rq">*</span></label><div class="firm"><canvas id="cv" class="cv"></canvas></div><div class="fbt"><button type="button" class="btn btn-r" onclick="lf()">🗑️ Borrar</button><button type="button" class="btn btn-d" onclick="sf()">✅ Guardar Firma</button></div></div>
+<button type="submit" class="btn">💾 Guardar Registro</button>
+<button type="button" class="btn btn-d" onclick="gp()" style="margin-top:6px">📄 Generar PDF</button>
+</form>
+</div>
+</div>
+
+<div id="credenciales" class="sec">
+<div class="card">
+<div class="ct">🎫 Credencial Digital</div>
+<div id="cc"></div>
+<div class="np" style="margin-top:10px">
+<button class="btn btn-d" onclick="window.print()">🖨️ Imprimir</button>
+<button class="btn btn-n" onclick="dp()">📥 Descargar PDF</button>
+</div>
+</div>
+</div>
+
+<div id="directorio" class="sec">
+<div class="card">
+<div class="ct">📖 Directorio de Registrados</div>
+<input type="text" class="sb" id="bus" placeholder="🔍 Buscar por nombre, folio, tradición..." onkeyup="fd()">
+<div id="td"></div>
+</div>
+</div>
+
+<div id="verificar" class="sec">
+<div class="card">
+<div class="ct">🔍 Verificar Registro</div>
+<div class="fg"><label class="fl">Ingrese el Folio o escanee QR</label><input type="text" class="in" id="fv" placeholder="Ej: AFM-000001"></div>
+<button class="btn" onclick="vr()">🔍 Verificar</button>
+<div id="rv" style="margin-top:12px"></div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+let regs=JSON.parse(localStorage.getItem("afromex_regs"))||[],fdt=null,ft=null,cv=null,ctx=null,dr=false,admin=false;
+const tr={rastafarismo:"Rastafarismo",palo:"Palo Mayombe",vodu:"Vodú",santeria:"Santería",candomble:"Candomblé",umbanda:"Umbanda",quimbanda:"Quimbanda",espiritismo:"Espiritismo Cruzado",tambor_mina:"Tambor de Mina",tercera_raiz:"Tercera Raíz",garifuna:"Garífuna",afromexicano:"Afromexicano",ifa:"Ifá",otra:"Otra tradición"};
+const em={aguascalientes:"Aguascalientes",bc:"Baja California",bcs:"Baja California Sur",campeche:"Campeche",cdmx:"Ciudad de México",chiapas:"Chiapas",chihuahua:"Chihuahua",coahuila:"Coahuila",colima:"Colima",durango:"Durango",edomex:"Estado de México",guanajuato:"Guanajuato",guerrero:"Guerrero",hidalgo:"Hidalgo",jalisco:"Jalisco",michoacan:"Michoacán",morelos:"Morelos",nayarit:"Nayarit",nuevo_leon:"Nuevo León",oaxaca:"Oaxaca",puebla:"Puebla",queretaro:"Querétaro",quintana_roo:"Quintana Roo",slp:"San Luis Potosí",sinaloa:"Sinaloa",sonora:"Sonora",tabasco:"Tabasco",tamaulipas:"Tamaulipas",tlaxcala:"Tlaxcala",veracruz:"Veracruz",yucatan:"Yucatán",zacatecas:"Zacatecas"};
+
+document.addEventListener("DOMContentLoaded",()=>{gf();init();as();rd();document.getElementById("login").style.display="none"});
+function chk(){let p=document.getElementById("pwd").value;if(p==="Nsuku2026"){admin=true;document.getElementById("login").style.display="none";document.querySelectorAll(".nav-btn.hid").forEach(b=>b.classList.remove("hid"));t("✅ Modo administrador activado")}else{t("❌ Contraseña incorrecta",1)}}
+function skip(){document.getElementById("login").style.display="none"}
+function sh(id){document.querySelectorAll(".sec").forEach(s=>s.classList.remove("a"));document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("a"));document.getElementById(id).classList.add("a");event.target.classList.add("a");if(id==="directorio")rd();if(id==="credenciales")uc()}
+function gf(){document.getElementById("fol").value="AFM-"+String(regs.length+1).padStart(6,"0")}
+function cf(inp){if(inp.files&&inp.files[0]){let r=new FileReader();r.onload=e=>{ft=e.target.result;document.getElementById("fpv").innerHTML="<img src="+ft+">"};r.readAsDataURL(inp.files[0])}}
+function init(){cv=document.getElementById("cv");ctx=cv.getContext("2d");cv.width=cv.offsetWidth;cv.height=cv.offsetHeight;ctx.strokeStyle="#C9A227";ctx.lineWidth=2;ctx.lineCap="round";let d=(e,t)=>{e.preventDefault();let c=t?e.touches[0]:e,rect=cv.getBoundingClientRect();dr=true;ctx.beginPath();ctx.moveTo(c.clientX-rect.left,c.clientY-rect.top)};let m=(e,t)=>{e.preventDefault();if(!dr)return;let c=t?e.touches[0]:e,rect=cv.getBoundingClientRect();ctx.lineTo(c.clientX-rect.left,c.clientY-rect.top);ctx.stroke()};let u=()=>{dr=false;ctx.beginPath()};cv.addEventListener("mousedown",e=>d(e,false));cv.addEventListener("mousemove",e=>m(e,false));cv.addEventListener("mouseup",u);cv.addEventListener("mouseout",u);cv.addEventListener("touchstart",e=>d(e,true));cv.addEventListener("touchmove",e=>m(e,true));cv.addEventListener("touchend",u)}
+function lf(){ctx.clearRect(0,0,cv.width,cv.height);fdt=null}
+function sf(){fdt=cv.toDataURL();t("✅ Firma guardada")}
+function guardar(){let n=document.getElementById("nom").value.trim(),te=document.getElementById("tel").value.trim(),d=document.getElementById("dir").value.trim(),trd=document.getElementById("trad").value;if(!n||!te||!d||!trd){t("❌ Complete campos obligatorios",1);return}let r={fol:document.getElementById("fol").value,nom:n,fn:document.getElementById("fn").value,ln:document.getElementById("ln").value,cve:document.getElementById("cve").value,se:document.getElementById("se").value,idext:document.getElementById("idext").value,tel:te,mail:document.getElementById("mail").value,dir:d,ec:document.getElementById("ec").value,ocu:document.getElementById("ocu").value,est:document.getElementById("est").value,trad:trd,casa:document.getElementById("casa").value||"Nsuku Ya Nkama",cargo:document.getElementById("cargo").value,orig:document.getElementById("orig").value,pori:document.getElementById("pori").value,emx:document.getElementById("emx").value,obs:document.getElementById("obs").value,ft:ft,fd:fdt,fr:new Date().toISOString(),act:true};regs.push(r);localStorage.setItem("afromex_regs",JSON.stringify(regs));t("✅ Registro guardado");gf();document.getElementById("frm").reset();document.getElementById("fpv").innerHTML="<span class="ph">📷</span>";lf();ft=null;as();setTimeout(()=>{mc(r);sh("credenciales");document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("a"));document.querySelectorAll(".nav-btn")[2].classList.add("a")},800)}
+function mc(r){let c=document.getElementById("cc");let fh=r.ft?"<img src="+r.ft+">":"<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#ddd;color:#666;font-size:25px">👤</div>";let fs=r.fd?"<img src="+r.fd+" style="width:70px;height:auto;">":"<div style="width:70px;height:25px;border-bottom:1px solid #333"></div>";c.innerHTML="<div class="cred"><div class="ch"><div class="cti"><h3>CENSO AFROMEX</h3><p>Censo Intercomunitario</p></div><div class="cfol">"+r.fol+"</div></div><div class="cb"><div class="cf">"+fh+"</div><div class="cd"><div class="cc"><div class="ccl">Nombre</div><div class="ccv">"+r.nom+"</div></div><div class="cc"><div class="ccl">Tradición</div><div class="ccv">"+(tr[r.trad]||r.trad)+"</div></div><div class="cc"><div class="ccl">Cargo</div><div class="ccv">"+(r.cargo||"Miembro")+"</div></div><div class="casa-d"><div class="casa-dl">Casa Religiosa</div><div class="casa-dv">"+(r.casa||"Nsuku Ya Nkama")+"</div></div></div></div><div class="cft"><div class="cqr" id="qr-"+r.fol+""></div><div class="cfs"><div class="cfl">"+fs+"</div><div class="cftx">Firma Digital</div></div></div></div><div class="rev"><div class="rh"><div class="rt">CENSO AFROMEX</div><p style="font-size:8px;color:#666;margin-top:2px">Censamos para contar</p></div><div class="rd"><strong>Nsuku Ya Nkama</strong><br>Av. de las Huertas 12, Col. Las Huertas 3ra Sección<br>Naucalpan, Estado de México<br>Fundador: Moshe Betech Keiser</div><div class="rl">Esta credencial acredita al portador como miembro registrado del Censo Intercomunitario de Comunidades Afrodescendientes y Africanas en México. Es documento oficial para identificación dentro de la comunidad.</div><div class="rqc"><div class="rql">Escanea para verificar</div><div id="qr2-"+r.fol+""></div></div></div>";setTimeout(()=>{let q1=document.getElementById("qr-"+r.fol);let q2=document.getElementById("qr2-"+r.fol);if(q1)q1.innerHTML=qr(r.fol,45);if(q2)q2.innerHTML=qr(r.fol,70)},100)}
+function qr(fol,s){let c=document.createElement("canvas");c.width=s;c.height=s;let x=c.getContext("2d");x.fillStyle="#F5F5F0";x.fillRect(0,0,s,s);x.fillStyle="#2D5A3D";let sz=Math.floor(s/25);let pad=Math.floor((s-sz*25)/2);for(let i=0;i<25;i++)for(let j=0;j<25;j++)if(Math.random()>0.5)x.fillRect(pad+i*sz,pad+j*sz,sz,sz);x.fillStyle="#C9A227";x.font="bold "+Math.floor(s/8)+"px monospace";x.textAlign="center";x.fillText("AFM",s/2,s/2-2);x.font=Math.floor(s/12)+"px monospace";x.fillText(fol.replace("AFM-",""),s/2,s/2+8);return c.toDataURL()?"":""}
+function uc(){if(regs.length>0)mc(regs[regs.length-1]);else document.getElementById("cc").innerHTML="<p style="text-align:center;color:var(--g)">No hay registros aún.</p>"}
+function rd(){let c=document.getElementById("td");if(regs.length===0){c.innerHTML="<p style="text-align:center;color:var(--g);padding:15px">No hay registros aún.</p>";return}let h="<table class="tab"><thead><tr><th>Folio</th><th>Nombre</th><th>Tradición</th><th>Teléfono</th><th>Estado</th><th>Acción</th></tr></thead><tbody>";regs.forEach(r=>{h+="<tr><td>"+r.fol+"</td><td>"+r.nom+"</td><td>"+(tr[r.trad]||r.trad)+"</td><td>"+r.tel+"</td><td>"+(em[r.emx]||"N/A")+"</td><td><button class="btn" style="padding:3px 6px;font-size:9px" onclick="vrg('"+r.fol+"')">👁️</button></td></tr>"});h+="</tbody></table>";c.innerHTML=h}
+function fd(){let t=document.getElementById("bus").value.toLowerCase();document.querySelectorAll(".tab tbody tr").forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(t)?"":"none"})}
+function vrg(fol){let r=regs.find(x=>x.fol===fol);if(r){mc(r);sh("credenciales");document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("a"));document.querySelectorAll(".nav-btn")[2].classList.add("a")}}
+function vr(){let f=document.getElementById("fv").value.trim().toUpperCase(),rv=document.getElementById("rv");if(!f){rv.innerHTML="<p style="color:var(--o)">Ingrese un folio</p>";return}let r=regs.find(x=>x.fol===f);if(r){rv.innerHTML="<div class="card" style="border-color:var(--v)"><div class="ct" style="color:var(--v)">✅ CREDENCIAL VERIFICADA</div><p><strong>Folio:</strong> "+r.fol+"</p><p><strong>Nombre:</strong> "+r.nom+"</p><p><strong>Tradición:</strong> "+(tr[r.trad]||r.trad)+"</p><p><strong>Cargo:</strong> "+(r.cargo||"Miembro")+"</p><p><strong>Casa:</strong> "+(r.casa||"Nsuku Ya Nkama")+"</p><p><strong>Estado:</strong> "+(r.act?"🟢 ACTIVO":"🔴 INACTIVO")+"</p><p><strong>Registro:</strong> "+new Date(r.fr).toLocaleDateString("es-MX")+"</p></div>";t("✅ Verificado")}else{rv.innerHTML="<div class="card" style="border-color:var(--r)"><div class="ct" style="color:var(--r)">❌ CREDENCIAL NO VÁLIDA</div><p>No existe registro con folio: <strong>"+f+"</strong></p></div>";t("❌ No válida",1)}}
+function as(){document.getElementById("st-t").textContent=regs.length;document.getElementById("st-a").textContent=regs.filter(r=>r.act).length;document.getElementById("st-m").textContent=regs.filter(r=>["ministro","babalawo","mambo","fundador"].includes(r.cargo)).length;document.getElementById("st-as").textContent=regs.filter(r=>r.cargo==="asociado").length}
+function gp(){if(regs.length===0){t("❌ No hay registros",1);return}let r=regs[regs.length-1];let w=window.open("","_blank");w.document.write("<html><head><title>Censo Afromex - "+r.fol+"</title><style>body{font-family:Arial;margin:20px}.h{text-align:center;color:#2D5A3D}.c{border:2px solid #C9A227;padding:15px;margin:10px 0;border-radius:8px}.l{color:#6B6B6B;font-size:12px}.v{font-weight:bold;color:#1A1A1A}</style></head><body><div class="h"><h1>CENSO AFROMEX</h1><h2>Registro Oficial</h2></div><div class="c"><p class="l">FOLIO</p><p class="v">"+r.fol+"</p><p class="l">NOMBRE</p><p class="v">"+r.nom+"</p><p class="l">TRADICIÓN</p><p class="v">"+(tr[r.trad]||r.trad)+"</p><p class="l">CASA</p><p class="v">"+(r.casa||"Nsuku Ya Nkama")+"</p><p class="l">TELÉFONO</p><p class="v">"+r.tel+"</p><p class="l">DIRECCIÓN</p><p class="v">"+r.dir+"</p><p class="l">FECHA DE REGISTRO</p><p class="v">"+new Date(r.fr).toLocaleDateString("es-MX")+"</p></div><div style="text-align:center;margin-top:30px"><p style="font-size:10px;color:#666">Censo Intercomunitario de Comunidades Afrodescendientes y Africanas en México<br>Nsuku Ya Nkama - Av. de las Huertas 12, Naucalpan, Edo. Méx.</p></div></body></html>");w.document.close();w.print()}
+function dp(){if(regs.length===0){t("❌ No hay registros",1);return}let r=regs[regs.length-1];let w=window.open("","_blank");w.document.write("<html><head><title>Credencial "+r.fol+"</title><style>@media print{body{margin:0}.page{page-break-after:always}}body{font-family:Arial;background:#f5f5f0;margin:0;padding:20px}.cred{width:340px;margin:0 auto;border:3px solid #2D5A3D;border-radius:12px;padding:20px;background:#f5f5f0;position:relative}.cred::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#2D5A3D 33%,#C9A227 33%,#C9A227 66%,#E85D04 66%)}.h{display:flex;align-items:center;gap:10px;margin-bottom:15px;padding-top:5px}.h h3{margin:0;font-size:16px;color:#1A1A1A;text-transform:uppercase}.h p{margin:2px 0 0;font-size:9px;color:#666}.fol{background:#2D5A3D;color:#f5f5f0;padding:3px 10px;border-radius:15px;font-size:11px;font-weight:bold}.b{display:flex;gap:10px}.f{width:90px;height:110px;border:2px solid #C9A227;border-radius:6px;overflow:hidden}.f img{width:100%;height:100%;object-fit:cover}.d{flex:1}.d p{margin:4px 0;font-size:11px}.d .l{font-size:8px;color:#666;text-transform:uppercase}.d .v{font-weight:bold;color:#1A1A1A}.casa{background:rgba(45,90,61,0.1);border-left:3px solid #2D5A3D;padding:6px;margin:6px 0}.casa .l{font-size:7px;color:#2D5A3D;text-transform:uppercase;font-weight:bold}.casa .v{font-size:13px;font-weight:900;color:#1A1A1A;text-transform:uppercase}.ft{margin-top:12px;padding-top:8px;border-top:1px solid #ccc;display:flex;justify-content:space-between}.qr{width:50px;height:50px}.fs{text-align:right}.fs .l{font-size:8px;color:#666}.rev{width:340px;margin:15px auto;border:3px solid #E85D04;border-radius:12px;padding:20px;background:#E8E8E0;position:relative}.rev::before{content:"";position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#2D5A3D 33%,#C9A227 33%,#C9A227 66%,#E85D04 66%)}.rh{text-align:center;margin-bottom:10px}.rh h3{margin:0;font-size:14px;color:#2D5A3D;text-transform:uppercase}.rd{text-align:center;font-size:10px;line-height:1.5;margin-bottom:10px}.rl{background:rgba(45,90,61,0.08);border-left:3px solid #2D5A3D;padding:8px;font-size:9px;line-height:1.3;text-align:justify;margin-bottom:10px}.rqc{text-align:center}</style></head><body><div class="cred"><div class="h"><div style="flex:1"><h3>CENSO AFROMEX</h3><p>Censo Intercomunitario</p></div><div class="fol">"+r.fol+"</div></div><div class="b"><div class="f">"+(r.ft?"<img src="+r.ft+">":"<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#ddd;color:#666;font-size:30px">👤</div>")+"</div><div class="d"><p><span class="l">Nombre</span><br><span class="v">"+r.nom+"</span></p><p><span class="l">Tradición</span><br><span class="v">"+(tr[r.trad]||r.trad)+"</span></p><p><span class="l">Cargo</span><br><span class="v">"+(r.cargo||"Miembro")+"</span></p><div class="casa"><div class="l">Casa Religiosa</div><div class="v">"+(r.casa||"Nsuku Ya Nkama")+"</div></div></div></div><div class="ft"><div class="qr" id="pqr"></div><div class="fs"><div style="border-top:1px solid #333;width:80px;margin:0 0 3px auto;padding-top:3px">"+(r.fd?"<img src="+r.fd+" style="width:70px">":"<div style="width:70px;height:20px"></div>")+"</div><div class="l">Firma Digital</div></div></div></div><div class="rev"><div class="rh"><h3>CENSO AFROMEX</h3><p style="font-size:8px;color:#666;margin:2px 0 0">Censamos para contar</p></div><div class="rd"><strong>Nsuku Ya Nkama</strong><br>Av. de las Huertas 12, Col. Las Huertas 3ra Sección<br>Naucalpan, Estado de México<br>Fundador: Moshe Betech Keiser</div><div class="rl">Esta credencial acredita al portador como miembro registrado del Censo Intercomunitario de Comunidades Afrodescendientes y Africanas en México. Es documento oficial para identificación dentro de la comunidad.</div><div class="rqc"><div style="font-size:8px;color:#666;text-transform:uppercase;margin-bottom:3px">Escanea para verificar</div><div id="pqr2"></div></div></div></body></html>");w.document.close();setTimeout(()=>{w.print()},500)}
+function t(msg,err){let toast=document.getElementById("toast");toast.textContent=msg;toast.className="toast s"+(err?" toast-e":"");setTimeout(()=>toast.classList.remove("s"),2500)}
+</script>
+</body>
+</html>
